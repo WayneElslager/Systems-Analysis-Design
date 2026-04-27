@@ -1,0 +1,100 @@
+{% extends "base.html" %}
+{% block title %}Book a Room &mdash; Panther Hotel{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-6 col-md-8">
+
+    <div class="card border-0 shadow-sm rounded-4">
+      <div class="card-body p-4 p-md-5">
+
+        <h2 class="fw-bold text-center mb-1">
+          <i class="bi bi-calendar-plus text-primary me-2"></i>Room Reservation
+        </h2>
+        <p class="text-center text-muted mb-4">Panther Hotel</p>
+
+        {% if errors %}
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+          <ul class="mb-0">
+            {% for e in errors %}<li>{{ e }}</li>{% endfor %}
+          </ul>
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endif %}
+
+        <form method="POST" action="{{ url_for('reservation') }}">
+
+          <div class="mb-3">
+            <label for="name" class="form-label fw-semibold">Full Name</label>
+            <input type="text" id="name" name="name"
+                   class="form-control form-control-lg"
+                   placeholder="Jane Smith"
+                   value="{{ name if name is defined else '' }}"
+                   required />
+          </div>
+
+          <div class="mb-3">
+            <label for="checkin" class="form-label fw-semibold">Check-in Date</label>
+            <input type="date" id="checkin" name="checkin"
+                   class="form-control form-control-lg"
+                   value="{{ checkin if checkin is defined else '' }}"
+                   required />
+          </div>
+
+          <div class="mb-3">
+            <label for="checkout" class="form-label fw-semibold">Check-out Date</label>
+            <input type="date" id="checkout" name="checkout"
+                   class="form-control form-control-lg"
+                   value="{{ checkout if checkout is defined else '' }}"
+                   required />
+          </div>
+
+          <div class="mb-4">
+            <label for="room_type" class="form-label fw-semibold">Room Type</label>
+            <select id="room_type" name="room_type" class="form-select form-select-lg" required>
+              <option value="" disabled {% if not (room_type is defined and room_type) %}selected{% endif %}>
+                Select a room type…
+              </option>
+              {% for rt in ['Standard Room', 'Deluxe Room', 'Suite'] %}
+              <option value="{{ rt }}"
+                {% if room_type is defined and room_type == rt %}selected{% endif %}>
+                {{ rt }}
+              </option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div class="d-grid">
+            <button type="submit" class="btn btn-primary btn-lg">
+              <i class="bi bi-check2-circle me-2"></i>Submit Reservation
+            </button>
+          </div>
+
+        </form>
+      </div>
+    </div>
+
+    <div class="text-center mt-3">
+      <a href="{{ url_for('index') }}" class="text-muted text-decoration-none">
+        <i class="bi bi-arrow-left me-1"></i>Back to Home
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+  // Prevent selecting past dates and enforce checkout > checkin
+  const today    = new Date().toISOString().split('T')[0];
+  const checkinEl  = document.getElementById('checkin');
+  const checkoutEl = document.getElementById('checkout');
+  checkinEl.min  = today;
+  checkoutEl.min = today;
+  checkinEl.addEventListener('change', () => {
+    checkoutEl.min = checkinEl.value;
+    if (checkoutEl.value && checkoutEl.value <= checkinEl.value) {
+      checkoutEl.value = '';
+    }
+  });
+</script>
+{% endblock %}

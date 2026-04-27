@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Reservation Confirmed &mdash; Panther Hotel{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-lg-6 col-md-8">
+
+    <div class="card border-0 shadow-sm rounded-4 text-center">
+      <div class="card-body p-4 p-md-5">
+
+        <div class="mb-3">
+          <i class="bi bi-patch-check-fill text-success" style="font-size: 4rem;"></i>
+        </div>
+
+        <h2 class="fw-bold mb-1">Reservation Confirmed!</h2>
+        <p class="text-muted mb-4">Confirmation Page</p>
+
+        <div class="alert alert-light border text-start rounded-3 px-4 py-3 mb-4">
+          <p class="mb-2">Dear <strong>{{ name }}</strong>,</p>
+          <p class="mb-2">
+            Thank you for choosing Panther Hotel. We are pleased to confirm your
+            <strong>{{ room_type }}</strong> reservation from
+            <strong>{{ checkin }}</strong> to <strong>{{ checkout }}</strong>.
+          </p>
+          <p class="mb-0">We look forward to seeing you soon.</p>
+        </div>
+
+        <!-- Summary Table -->
+        <table class="table table-bordered table-sm mb-4 text-start">
+          <tbody>
+            <tr><th class="bg-light w-50">Guest Name</th><td>{{ name }}</td></tr>
+            <tr><th class="bg-light">Room Type</th><td>{{ room_type }}</td></tr>
+            <tr><th class="bg-light">Check-in</th><td>{{ checkin }}</td></tr>
+            <tr><th class="bg-light">Check-out</th><td>{{ checkout }}</td></tr>
+          </tbody>
+        </table>
+
+        <div class="d-flex justify-content-center gap-3 flex-wrap">
+          <a href="{{ url_for('index') }}" class="btn btn-primary px-4">
+            <i class="bi bi-house me-2"></i>Back to Home
+          </a>
+          <a href="{{ url_for('reservation') }}" class="btn btn-outline-secondary px-4">
+            <i class="bi bi-plus-circle me-2"></i>New Reservation
+          </a>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}

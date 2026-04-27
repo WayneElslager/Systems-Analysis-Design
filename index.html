@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Welcome &mdash; Panther Hotel{% endblock %}
+
+{% block content %}
+<!-- Hero -->
+<div class="hero-section text-center text-white rounded-4 py-5 mb-5">
+  <h1 class="display-4 fw-bold mb-2">Welcome to Panther Hotel</h1>
+  <p class="lead mb-4">Luxury, comfort, and style in the heart of the city.</p>
+  <div class="d-flex justify-content-center gap-3 flex-wrap">
+    <a href="{{ url_for('reservation') }}"
+       class="btn btn-primary btn-lg px-5 shadow">
+      <i class="bi bi-calendar-check me-2"></i>Book a Room
+    </a>
+    <a href="{{ url_for('manager') }}"
+       class="btn btn-outline-light btn-lg px-5 shadow">
+      <i class="bi bi-person-badge me-2"></i>Manager
+    </a>
+  </div>
+</div>
+
+<!-- Feature Cards -->
+<div class="row g-4 mb-5">
+  <div class="col-md-4">
+    <div class="card h-100 border-0 shadow-sm text-center p-4">
+      <div class="feature-icon mb-3">
+        <i class="bi bi-shield-check fs-1 text-primary"></i>
+      </div>
+      <h5 class="fw-semibold">Safe &amp; Secure</h5>
+      <p class="text-muted small">24/7 security and front-desk service for a worry-free stay.</p>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card h-100 border-0 shadow-sm text-center p-4">
+      <div class="feature-icon mb-3">
+        <i class="bi bi-wifi fs-1 text-primary"></i>
+      </div>
+      <h5 class="fw-semibold">Free High-Speed Wi-Fi</h5>
+      <p class="text-muted small">Stay connected with complimentary fiber-optic internet throughout.</p>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card h-100 border-0 shadow-sm text-center p-4">
+      <div class="feature-icon mb-3">
+        <i class="bi bi-cup-hot fs-1 text-primary"></i>
+      </div>
+      <h5 class="fw-semibold">Gourmet Dining</h5>
+      <p class="text-muted small">Start every morning with our acclaimed complimentary breakfast.</p>
+    </div>
+  </div>
+</div>
+
+<!-- Room Types Preview -->
+<h2 class="fw-bold mb-4 text-center">Our Rooms</h2>
+<div class="row g-4">
+  {% set rooms = [
+    ('Standard Room',  'bi-door-closed',  '$99',  'Comfortable queen bed, work desk, and city views.'),
+    ('Deluxe Room',    'bi-stars',        '$149', 'King bed, upgraded amenities, and a spacious layout.'),
+    ('Suite',          'bi-gem',          '$249', 'Separate living area, premium furnishings, and panoramic views.'),
+  ] %}
+  {% for title, icon, price, desc in rooms %}
+  <div class="col-md-4">
+    <div class="card h-100 border-0 shadow-sm">
+      <div class="card-body p-4">
+        <i class="bi {{ icon }} fs-2 text-primary mb-3 d-block"></i>
+        <h5 class="fw-semibold">{{ title }}</h5>
+        <p class="text-muted small">{{ desc }}</p>
+        <p class="fw-bold text-primary fs-5">From {{ price }}/night</p>
+        <a href="{{ url_for('reservation') }}" class="btn btn-sm btn-outline-primary">Reserve Now</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
+{% endblock %}
